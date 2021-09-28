@@ -45,9 +45,7 @@ export class CreateUserDto extends User{
     senha: string;
 
     @IsString()
-    @IsCpfValid({
-        message: "cpf deve ser válido"
-    })
+    // @IsCpfValid()
     cpf: string;
 
     @IsOptional()

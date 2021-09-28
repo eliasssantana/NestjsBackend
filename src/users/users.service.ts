@@ -52,7 +52,7 @@ export class UsersService {
   async findByCPF(cpf: string): Promise<Usuario>{
     return this.prisma.usuario.findUnique({
       where:{
-        cpf
+        cpf: cpf
       }
     })
   }

@@ -13,10 +13,10 @@ async function bootstrap() {
   }))
   
 
-  // app.useGlobalInterceptors(new UnauthorizedInterceptor());
+  app.useGlobalInterceptors(new UnauthorizedInterceptor());
 
   useContainer(app.select(AppModule), {fallbackOnErrors: true})
   
-  await app.listen(3000);
+  await app.listen(5000);
 }
 bootstrap();

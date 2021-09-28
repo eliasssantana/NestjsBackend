@@ -25,7 +25,6 @@ export class GameService {
       ...gameData
     }
   }
-
   async findAll(): Promise<Jogo[]>{
     return await this.prisma.jogo.findMany({
       include: {
@@ -37,6 +36,7 @@ export class GameService {
       }
     })
   }
+
 
   async findOne(id: number): Promise<Jogo>{
     return await this.prisma.jogo.findUnique({
@@ -52,6 +52,7 @@ export class GameService {
       }
     });
   }
+
 
   async update(id: number, updateGameDto: UpdateGameDto): Promise<Jogo>{
     const {generosIds} = updateGameDto;

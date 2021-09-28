@@ -39,6 +39,7 @@ let UsersController = class UsersController {
     }
 };
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -53,6 +54,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "findAll", null);
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -60,6 +62,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "findOne", null);
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -68,6 +71,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "update", null);
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

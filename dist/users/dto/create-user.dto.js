@@ -14,7 +14,6 @@ const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const user_entity_1 = require("../entities/user.entity");
 const create_profile_dto_1 = require("../../profile/dto/create-profile.dto");
-const isCPFvalid_validator_1 = require("../isCPFvalid.validator");
 class CreateUserDto extends user_entity_1.User {
 }
 __decorate([
@@ -61,9 +60,6 @@ __decorate([
 ], CreateUserDto.prototype, "senha", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, isCPFvalid_validator_1.IsCpfValid)({
-        message: "cpf deve ser válido"
-    }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "cpf", void 0);
 __decorate([
