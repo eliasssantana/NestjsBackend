@@ -5,6 +5,6 @@ export declare class CreateProfileDto extends Profile {
     titulo: string;
     imagem: string;
     usuarioId?: number;
-    jogosId?: number[];
-    jogo?: CreateGameDto[];
+    jogosIds?: number[];
+    jogos?: CreateGameDto[];
 }

@@ -18,13 +18,22 @@ let GenreService = class GenreService {
     }
     async create(data) {
         return await this.prisma.genero.create({
-            data
+            data: data
         });
     }
     async findAll() {
         return await this.prisma.genero.findMany({
-            orderBy: {
-                nome: 'asc'
+            include: {
+                jogos: {
+                    select: {
+                        titulo: true,
+                        descricao: true,
+                        nota_imdb: true
+                    },
+                    orderBy: {
+                        titulo: 'asc'
+                    }
+                }
             }
         });
     }

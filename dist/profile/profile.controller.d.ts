@@ -5,7 +5,12 @@ import { Perfil } from '.prisma/client';
 export declare class ProfileController {
     private readonly profileService;
     constructor(profileService: ProfileService);
-    create(createProfileDto: CreateProfileDto): Promise<Perfil>;
+    create(createProfileDto: CreateProfileDto): Promise<{
+        id: number;
+        titulo: string;
+        imagem: string;
+        usuarioId: number;
+    }>;
     findAll(): Promise<Perfil[]>;
     findOne(id: string): Promise<Perfil>;
     update(id: string, updateProfileDto: UpdateProfileDto): Promise<Perfil>;

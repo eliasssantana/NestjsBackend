@@ -1,5 +1,6 @@
 import { Prisma} from ".prisma/client";
-import { IsEmail, IsInt, IsNotEmpty, IsOptional, IsString, IsUrl } from "class-validator";
+import { Type } from "class-transformer";
+import { IsArray, IsInt, IsNotEmpty, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
 import { CreateGameDto } from "src/game/dto/create-game.dto";
 import { Profile } from "../entities/profile.entity";
 
@@ -31,9 +32,12 @@ export class CreateProfileDto extends Profile{
     usuarioId?: number;
 
     @IsOptional()
-    @IsInt()
-    jogosId?: number[]
+    @IsInt({each:true})
+    jogosIds?: number[]
 
+    @ValidateNested({each:true})
+    @Type(()=> CreateGameDto)
+    @IsArray()
     @IsOptional()
-    jogo?: CreateGameDto[]
+    jogos?: CreateGameDto[]
 }

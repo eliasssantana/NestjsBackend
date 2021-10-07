@@ -11,47 +11,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProfileService = void 0;
 const common_1 = require("@nestjs/common");
-const create_game_dto_1 = require("../game/dto/create-game.dto");
 const prisma_service_1 = require("../prisma/prisma.service");
 let ProfileService = class ProfileService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async create(data) {
-        return await this.prisma.perfil.create({
-            data: data,
+    async create(createProfileDto) {
+        const jogosIds = createProfileDto.jogosIds;
+        delete createProfileDto.jogosIds;
+        const data = Object.assign(Object.assign({}, createProfileDto), { jogos: {
+                create: createProfileDto.jogos,
+                connect: jogosIds.map((id) => ({ id })),
+            } });
+        const profileData = await this.prisma.perfil.create({ data: data });
+        return Object.assign({}, profileData);
+    }
+    async findAll() {
+        return await this.prisma.perfil.findMany({
             include: {
-                usuario: {
-                    select: {
-                        nome: true,
-                        sobrenome: true
-                    }
-                }
+                jogos: true,
+                usuario: true
             }
         });
     }
-    async addFavoriteGames(createProfile) {
-        const jogosIds = createProfile.jogosId;
-        delete createProfile.jogosId;
-        const data = Object.assign(Object.assign({}, createProfile), { jogos: {
-                create: createProfile.jogo,
-                connect: jogosIds.map(id => ({ id }))
-            } });
-        const gameAdded = await this.prisma.perfil.create({ data, include: { jogos: true } });
-        return Object.assign({}, gameAdded);
-    }
-    async findAll() {
-        return await this.prisma.perfil.findMany();
-    }
     async findOne(id) {
-        return await this.prisma.perfil.findUnique({ where: { id } });
+        return await this.prisma.perfil.findUnique({ where: { id }, include: { usuario: true, jogos: true } });
     }
     async update(id, updateProfileDto) {
+        const { jogosIds } = updateProfileDto;
+        delete updateProfileDto.jogosIds;
+        const { jogosDisconnectIds } = updateProfileDto;
+        delete updateProfileDto.jogosDisconnectIds;
+        const data = Object.assign(Object.assign({}, updateProfileDto), { jogos: {
+                connect: jogosIds === null || jogosIds === void 0 ? void 0 : jogosIds.map((id) => ({ id })),
+                disconnect: jogosDisconnectIds === null || jogosDisconnectIds === void 0 ? void 0 : jogosDisconnectIds.map((id) => ({ id: id })),
+            } });
         return await this.prisma.perfil.update({
             where: {
                 id
             },
-            data: updateProfileDto
+            data: data,
+            include: {
+                jogos: true,
+                usuario: true
+            }
         });
     }
     async remove(id) {

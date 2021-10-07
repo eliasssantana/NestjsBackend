@@ -33,6 +33,7 @@ model Perfil{
 
 model Jogo{
   id            Int @id @default(autoincrement())
+  titulo        String @default("nomeDoJogo")
   capa          String
   descricao     String
   ano           Int

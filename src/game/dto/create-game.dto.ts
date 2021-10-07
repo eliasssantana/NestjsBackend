@@ -8,6 +8,9 @@ export class CreateGameDto extends Game{
         message: "capa deve ser uma string"
     })
     capa: string;
+    
+    @IsString()
+    titulo: string;
 
     @IsString({
         message: "descricao deve ser uma string"

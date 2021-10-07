@@ -5,8 +5,12 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 export declare class ProfileService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(data: CreateProfileDto): Promise<Perfil>;
-    addFavoriteGames(createProfile: CreateProfileDto): Promise<Perfil>;
+    create(createProfileDto: CreateProfileDto): Promise<{
+        id: number;
+        titulo: string;
+        imagem: string;
+        usuarioId: number;
+    }>;
     findAll(): Promise<Perfil[]>;
     findOne(id: number): Promise<Perfil>;
     update(id: number, updateProfileDto: UpdateProfileDto): Promise<Perfil>;

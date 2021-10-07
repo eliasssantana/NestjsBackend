@@ -33,6 +33,9 @@ export class GameService {
             nome: true
           }
         }
+      },
+      orderBy:{
+        titulo: 'asc'
       }
     })
   }
@@ -48,7 +51,8 @@ export class GameService {
           select:{
             nome: true
           }
-        }
+        },
+        perfis: true
       }
     });
   }
@@ -65,9 +69,9 @@ export class GameService {
 
     const data = {
       ...updateGameDto,
-      jogos: {
+      generos: {
         connect: generosIds?.map((id) => ({ id })),
-        disconnect: generosDisconnectIds?.map((id) => ({ id })),
+        disconnect: generosDisconnectIds?.map((id) => ({ id:id })),
       },
     };
 
@@ -76,9 +80,10 @@ export class GameService {
       where: {
         id
       },
-      data: updateGameDto,
+      data:data,
       include:{
-        generos: true
+        generos: true,
+        perfis: true
       }
     })
   }
@@ -89,11 +94,7 @@ export class GameService {
         id
       },
       include: {
-        generos:{
-          select: {
-            nome: true
-          }
-        }
+        generos: true
       }
     })
   }

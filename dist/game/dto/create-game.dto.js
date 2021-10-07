@@ -23,6 +23,10 @@ __decorate([
     __metadata("design:type", String)
 ], CreateGameDto.prototype, "capa", void 0);
 __decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateGameDto.prototype, "titulo", void 0);
+__decorate([
     (0, class_validator_1.IsString)({
         message: "descricao deve ser uma string"
     }),

@@ -11,7 +11,7 @@ export class ProfileController {
 
   @Public()
   @Post()
-  async create(@Body() createProfileDto: CreateProfileDto):Promise<Perfil> {
+  async create(@Body() createProfileDto: CreateProfileDto) {
     return await this.profileService.create(createProfileDto);
   }
 

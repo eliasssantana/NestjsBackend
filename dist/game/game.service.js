@@ -34,6 +34,9 @@ let GameService = class GameService {
                         nome: true
                     }
                 }
+            },
+            orderBy: {
+                titulo: 'asc'
             }
         });
     }
@@ -47,7 +50,8 @@ let GameService = class GameService {
                     select: {
                         nome: true
                     }
-                }
+                },
+                perfis: true
             }
         });
     }
@@ -56,17 +60,18 @@ let GameService = class GameService {
         delete updateGameDto.generosIds;
         const { generosDisconnectIds } = updateGameDto;
         delete updateGameDto.generosDisconnectIds;
-        const data = Object.assign(Object.assign({}, updateGameDto), { jogos: {
+        const data = Object.assign(Object.assign({}, updateGameDto), { generos: {
                 connect: generosIds === null || generosIds === void 0 ? void 0 : generosIds.map((id) => ({ id })),
-                disconnect: generosDisconnectIds === null || generosDisconnectIds === void 0 ? void 0 : generosDisconnectIds.map((id) => ({ id })),
+                disconnect: generosDisconnectIds === null || generosDisconnectIds === void 0 ? void 0 : generosDisconnectIds.map((id) => ({ id: id })),
             } });
         return await this.prisma.jogo.update({
             where: {
                 id
             },
-            data: updateGameDto,
+            data: data,
             include: {
-                generos: true
+                generos: true,
+                perfis: true
             }
         });
     }
@@ -76,11 +81,7 @@ let GameService = class GameService {
                 id
             },
             include: {
-                generos: {
-                    select: {
-                        nome: true
-                    }
-                }
+                generos: true
             }
         });
     }

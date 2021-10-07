@@ -1,7 +1,9 @@
+import { CreateGameDto } from "src/game/dto/create-game.dto";
 export declare class Profile {
-    jogosId?: number[];
-    usuarioId?: number;
     id?: number;
     titulo: string;
     imagem: string;
+    jogosIds?: number[];
+    usuarioId?: number;
+    jogos?: CreateGameDto[];
 }
