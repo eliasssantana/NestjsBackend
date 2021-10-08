@@ -8,23 +8,28 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 export class ProfileService {
   constructor(private readonly prisma: PrismaService){}
   async create(createProfileDto: CreateProfileDto) {
-    const jogosIds = createProfileDto.jogosIds;
-  
-    delete createProfileDto.jogosIds;
-  
-    const data: Prisma.PerfilUncheckedCreateInput = {
-      ...createProfileDto,
-      jogos: {
-        create: createProfileDto.jogos,
-        connect: jogosIds.map((id) => ({ id })),
-      },
-    };
-    const profileData = await this.prisma.perfil.create({data: data})
-  
-    return {
-      ...profileData
+        const jogosIds = createProfileDto.jogosIds;
+        const usuarioId = createProfileDto.usuarioId;
+        delete createProfileDto.jogosIds;
+        delete createProfileDto.usuarioId;
+        const data: Prisma.PerfilCreateInput = {
+            ...createProfileDto,
+            usuario: {
+                connect: {
+                    id: usuarioId || 5,
+                },
+            },
+            jogos: {
+                create: createProfileDto.jogos || [],
+                connect: jogosIds?.map(id => ({ id })),
+            },
+        };
+        const profileData = await this.prisma.perfil.create({ data: data, include: {jogos: true} });
+
+        return {
+            ...profileData,
+        };
     }
-  }
 
 
 
@@ -42,35 +47,33 @@ export class ProfileService {
   }
 
   async update(id: number, updateProfileDto: UpdateProfileDto): Promise<Perfil>{
-    const {jogosIds} = updateProfileDto;
+        const { jogosIds } = updateProfileDto;
 
-    delete updateProfileDto.jogosIds;
+        delete updateProfileDto.jogosIds;
 
-    const { jogosDisconnectIds } = updateProfileDto;
+        const { jogosDisconnectIds } = updateProfileDto;
 
-    delete updateProfileDto.jogosDisconnectIds;
+        delete updateProfileDto.jogosDisconnectIds;
 
-    const data = {
-      ...updateProfileDto,
-      jogos: {
-        connect: jogosIds?.map((id) => ({ id })),
-        disconnect: jogosDisconnectIds?.map((id) => ({ id:id })),
-      },
-    };
+        const data: Prisma.PerfilUpdateInput = {
+            ...updateProfileDto,
+            jogos: {
+                connect: jogosIds?.map(id => ({ id })),
+                disconnect: jogosDisconnectIds?.map(id => ({ id: id })),
+            },
+        };
 
-
-    return await this.prisma.perfil.update({
-      where: {
-        id
-      },
-      data: data,
-      include:{
-        jogos: true,
-        usuario: true
-      }
-    })
+        return await this.prisma.perfil.update({
+            where: {
+                id,
+            },
+            data: data,
+            include: {
+                jogos: true,
+                usuario: true,
+            },
+        });
   }
-
   async remove(id: number): Promise<Perfil> {
     return await this.prisma.perfil.delete({
       where:{

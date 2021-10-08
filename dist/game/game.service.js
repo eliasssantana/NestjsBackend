@@ -20,8 +20,8 @@ let GameService = class GameService {
         const generosIds = createGameDto.generosIds;
         delete createGameDto.generosIds;
         const data = Object.assign(Object.assign({}, createGameDto), { generos: {
-                create: createGameDto.generos,
-                connect: generosIds.map((id) => ({ id })),
+                create: createGameDto.generos || [],
+                connect: generosIds === null || generosIds === void 0 ? void 0 : generosIds.map((id) => ({ id })),
             } });
         const gameData = await this.prisma.jogo.create({ data, include: { generos: true } });
         return Object.assign({}, gameData);
@@ -79,9 +79,6 @@ let GameService = class GameService {
         return await this.prisma.jogo.delete({
             where: {
                 id
-            },
-            include: {
-                generos: true
             }
         });
     }

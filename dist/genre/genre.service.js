@@ -16,9 +16,12 @@ let GenreService = class GenreService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async create(data) {
+    async create(dto) {
+        const data = Object.assign(Object.assign({}, dto), { jogos: {
+                create: dto.jogos || [],
+            } });
         return await this.prisma.genero.create({
-            data: data
+            data,
         });
     }
     async findAll() {
@@ -45,10 +48,14 @@ let GenreService = class GenreService {
         });
     }
     async update(id, updateGenreDto) {
+        const data = Object.assign(Object.assign({}, updateGenreDto), { jogos: {
+                create: updateGenreDto.jogos || []
+            } });
         return await this.prisma.genero.update({
             where: {
-                id
-            }, data: updateGenreDto
+                id,
+            },
+            data,
         });
     }
     async remove(id) {

@@ -21,7 +21,7 @@ let UsersService = class UsersService {
         const perfisIds = createUserDto.perfisIds;
         delete createUserDto.perfisIds;
         const data = Object.assign(Object.assign({}, createUserDto), { senha: await bcrypt.hash(createUserDto.senha, 10), perfis: {
-                create: createUserDto.perfis,
+                create: createUserDto.perfis || [],
                 connect: perfisIds === null || perfisIds === void 0 ? void 0 : perfisIds.map((id) => ({ id })),
             } });
         const userData = await this.prisma.usuario.create({ data, include: { perfis: true } });

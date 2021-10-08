@@ -15,8 +15,8 @@ export class GameService {
     const data: Prisma.JogoUncheckedCreateInput = {
       ...createGameDto,
       generos: {
-        create: createGameDto.generos,
-        connect: generosIds.map((id) => ({ id })),
+        create: createGameDto.generos || [],
+        connect: generosIds?.map((id) => ({ id })),
       },
     };
     const gameData = await this.prisma.jogo.create({data, include: {generos: true}})
@@ -92,9 +92,6 @@ export class GameService {
     return await this.prisma.jogo.delete({
       where:{
         id
-      },
-      include: {
-        generos: true
       }
     })
   }

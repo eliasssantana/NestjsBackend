@@ -4,7 +4,7 @@ import { UpdateGenreDto } from './dto/update-genre.dto';
 export declare class GenreService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(data: CreateGenreDto): Promise<import(".prisma/client").Genero>;
+    create(dto: CreateGenreDto): Promise<import(".prisma/client").Genero>;
     findAll(): Promise<(import(".prisma/client").Genero & {
         jogos: {
             titulo: string;

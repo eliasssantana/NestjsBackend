@@ -18,12 +18,18 @@ let ProfileService = class ProfileService {
     }
     async create(createProfileDto) {
         const jogosIds = createProfileDto.jogosIds;
+        const usuarioId = createProfileDto.usuarioId;
         delete createProfileDto.jogosIds;
-        const data = Object.assign(Object.assign({}, createProfileDto), { jogos: {
-                create: createProfileDto.jogos,
-                connect: jogosIds.map((id) => ({ id })),
+        delete createProfileDto.usuarioId;
+        const data = Object.assign(Object.assign({}, createProfileDto), { usuario: {
+                connect: {
+                    id: usuarioId || 5,
+                },
+            }, jogos: {
+                create: createProfileDto.jogos || [],
+                connect: jogosIds === null || jogosIds === void 0 ? void 0 : jogosIds.map(id => ({ id })),
             } });
-        const profileData = await this.prisma.perfil.create({ data: data });
+        const profileData = await this.prisma.perfil.create({ data: data, include: { jogos: true } });
         return Object.assign({}, profileData);
     }
     async findAll() {
@@ -43,18 +49,18 @@ let ProfileService = class ProfileService {
         const { jogosDisconnectIds } = updateProfileDto;
         delete updateProfileDto.jogosDisconnectIds;
         const data = Object.assign(Object.assign({}, updateProfileDto), { jogos: {
-                connect: jogosIds === null || jogosIds === void 0 ? void 0 : jogosIds.map((id) => ({ id })),
-                disconnect: jogosDisconnectIds === null || jogosDisconnectIds === void 0 ? void 0 : jogosDisconnectIds.map((id) => ({ id: id })),
+                connect: jogosIds === null || jogosIds === void 0 ? void 0 : jogosIds.map(id => ({ id })),
+                disconnect: jogosDisconnectIds === null || jogosDisconnectIds === void 0 ? void 0 : jogosDisconnectIds.map(id => ({ id: id })),
             } });
         return await this.prisma.perfil.update({
             where: {
-                id
+                id,
             },
             data: data,
             include: {
                 jogos: true,
-                usuario: true
-            }
+                usuario: true,
+            },
         });
     }
     async remove(id) {

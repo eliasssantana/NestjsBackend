@@ -16,11 +16,11 @@ export class UsersService {
   
     delete createUserDto.perfisIds;
   
-    const data: Prisma.UsuarioUncheckedCreateInput = {
+    const data: Prisma.UsuarioCreateInput = {
       ...createUserDto,
       senha: await bcrypt.hash(createUserDto.senha, 10),
       perfis: {
-        create: createUserDto.perfis,
+        create: createUserDto.perfis || [],
         connect: perfisIds?.map((id) => ({ id })),
       },
     };

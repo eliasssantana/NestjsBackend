@@ -10,6 +10,7 @@ export declare class ProfileController {
         titulo: string;
         imagem: string;
         usuarioId: number;
+        jogos: import(".prisma/client").Jogo[];
     }>;
     findAll(): Promise<Perfil[]>;
     findOne(id: string): Promise<Perfil>;

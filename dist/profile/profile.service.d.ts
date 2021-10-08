@@ -10,6 +10,7 @@ export declare class ProfileService {
         titulo: string;
         imagem: string;
         usuarioId: number;
+        jogos: import(".prisma/client").Jogo[];
     }>;
     findAll(): Promise<Perfil[]>;
     findOne(id: number): Promise<Perfil>;
