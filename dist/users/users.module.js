@@ -11,14 +11,13 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const users_controller_1 = require("./users.controller");
 const prisma_module_1 = require("../prisma/prisma.module");
-const isCPFvalid_validator_1 = require("./isCPFvalid.validator");
 let UsersModule = class UsersModule {
 };
 UsersModule = __decorate([
     (0, common_1.Module)({
         imports: [prisma_module_1.PrismaModule],
         controllers: [users_controller_1.UsersController],
-        providers: [users_service_1.UsersService, prisma_module_1.PrismaModule, isCPFvalid_validator_1.IsCpfValidConstraint],
+        providers: [users_service_1.UsersService, prisma_module_1.PrismaModule],
         exports: [users_service_1.UsersService]
     })
 ], UsersModule);

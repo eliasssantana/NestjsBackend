@@ -3,7 +3,7 @@ import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString, IsNumber, Validat
 import { Type } from 'class-transformer'
 import { User } from "../entities/user.entity";
 import { CreateProfileDto } from "src/profile/dto/create-profile.dto";
-import { IsCpfValid } from "../isCPFvalid.validator";
+import { IsCpfValid } from "../isCPFvalid.decorator";
 
 export class CreateUserDto extends User{
 
@@ -35,7 +35,7 @@ export class CreateUserDto extends User{
     @IsString()
     @MinLength(4)
     @MaxLength(20)
-    @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    @Matches(/([A-Z])\w+/g, {
     message: 'password too weak',
     })
     @IsNotEmpty({
@@ -45,7 +45,7 @@ export class CreateUserDto extends User{
     senha: string;
 
     @IsString()
-    // @IsCpfValid()
+    @IsCpfValid()
     cpf: string;
 
     @IsOptional()

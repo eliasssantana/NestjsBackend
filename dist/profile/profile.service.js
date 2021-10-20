@@ -27,7 +27,7 @@ let ProfileService = class ProfileService {
                 },
             }, jogos: {
                 create: createProfileDto.jogos || [],
-                connect: jogosIds === null || jogosIds === void 0 ? void 0 : jogosIds.map(id => ({ id })),
+                connect: (jogosIds === null || jogosIds === void 0 ? void 0 : jogosIds.map(id => ({ id }))) || [],
             } });
         const profileData = await this.prisma.perfil.create({ data: data, include: { jogos: true } });
         return Object.assign({}, profileData);

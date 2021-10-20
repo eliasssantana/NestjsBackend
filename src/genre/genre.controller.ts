@@ -36,6 +36,7 @@ export class GenreController {
   }
 
   @Public()
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<Genero> {
     return await this.genreService.remove(+id);

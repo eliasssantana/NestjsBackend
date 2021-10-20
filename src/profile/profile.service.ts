@@ -21,7 +21,7 @@ export class ProfileService {
             },
             jogos: {
                 create: createProfileDto.jogos || [],
-                connect: jogosIds?.map(id => ({ id })),
+                connect: jogosIds?.map(id => ({ id })) || [],
             },
         };
         const profileData = await this.prisma.perfil.create({ data: data, include: {jogos: true} });
