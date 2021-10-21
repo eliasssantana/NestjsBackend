@@ -12,7 +12,7 @@ export class GameService {
   
     delete createGameDto.generosIds;
   
-    const data: Prisma.JogoUncheckedCreateInput = {
+    const data: Prisma.JogoCreateInput = {
       ...createGameDto,
       generos: {
         create: createGameDto.generos || [],
