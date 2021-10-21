@@ -67,7 +67,7 @@ export class GameService {
 
     delete updateGameDto.generosDisconnectIds;
 
-    const data = {
+    const data = JogoUpdateInput{
       ...updateGameDto,
       generos: {
         connect: generosIds?.map((id) => ({ id })),
